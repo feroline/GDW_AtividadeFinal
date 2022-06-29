@@ -1,4 +1,5 @@
 let $bodyTable = '#bodyTable';
+let grupos = {};
 
 if (window.DOMParser) {
     let $buttonXML = document.querySelector('#buttonXML');
@@ -38,7 +39,7 @@ function setData(td,grupo){
 function getData(){
     let grupo = new Object();
     let tds = document.querySelectorAll('td');
-    let grupos = new Object();
+    setGrupos(new Object());
     let count = 0;
 
         tds.forEach(function (td,i){
@@ -47,12 +48,20 @@ function getData(){
 
         if(i != 0 && (i % 3 === 0)){
             setData(td,grupo)
-            grupos[count] = grupo;
+            setGrupos(grupo,count)
             count ++;
             grupo = new Object();
         }
     });
 
+    return getGrupos();
+}
+
+function setGrupos(grupo,count){
+    grupos[count] = grupo;
+}
+
+function getGrupos(){
     return grupos;
 }
 
@@ -68,7 +77,7 @@ function getXML() {
 
     return new XMLSerializer().serializeToString(xmlDoc);
 
-};
+}
 
 function createAndDownload(filename, text) {
     const element = document.createElement('a');
@@ -83,5 +92,4 @@ function createAndDownload(filename, text) {
 
     document.body.removeChild(element);
 }
-
 
